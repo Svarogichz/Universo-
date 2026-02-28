@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuestro Universo</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: radial-gradient(
+          circle at bottom,
+          #0d1b2a 0%,
+          #000814 70%,
+          #000000 100%
+        );
+        overflow: hidden;
+        font-family: "Segoe UI", sans-serif;
+        color: white;
+      }
+
+      /* Fondo estrellas */
+      .stars {
+        position: fixed;
+        inset: 0;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* Estrellas normales */
+      .big-star {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: radial-gradient(circle, #fff, #ffd700);
+        border-radius: 50%;
+        box-shadow: 0 0 15px #fff, 0 0 25px #ffd700;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .big-star:hover {
+        transform: scale(1.5);
+      }
+
+      /* SOL central más realista */
+      .special-star {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fff7c2 0%,
+          #ffd700 30%,
+          #ffae00 60%,
+          #ff8c00 100%
+        );
+        box-shadow: 0 0 40px #fff, 0 0 80px #ffd700, 0 0 150px #ffae00,
+          0 0 250px rgba(255, 140, 0, 0.7);
+        animation: pulse 2.5s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+
+      /* Escenas */
+      .scene {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  animation: fadeScene 0.8s ease forwards;
+}
+
+
+      @keyframes fadeScene {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+     .scene h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-shadow: 0 0 15px black, 0 0 30px black;
+}
+
+.scene p {
+  max-width: 90%;
+  font-size: 18px;
+  line-height: 1.8;
+  min-height: 120px;
+  text-shadow: 0 0 15px black, 0 0 30px black;
+  text-align: center;
+}
+
+
+      /* Foto final */
+      .love-photo {
+        width: 230px;
+        height: 230px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 20px;
+        box-shadow: 0 0 25px #fff, 0 0 60px #ffd700,
+          0 0 120px rgba(255, 215, 0, 0.6);
+        animation: photoAppear 1.5s ease forwards;
+        opacity: 0;
+      }
+
+      @keyframes photoAppear {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Luna botón */
+      .moon {
+        position: fixed;
+        top: 30px;
+        right: 40px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #f5f3ce,
+          #d6d2a8,
+          #8c8c7a
+        );
+        box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.4),
+          0 0 25px rgba(255, 255, 200, 0.6);
+        cursor: pointer;
+        z-index: 9999;
+        display: none;
+        transition: 0.3s;
+      }
+
+      .moon:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="stars" id="stars"></div>
+
+    <!-- 7 Estrellas principales -->
+    <div
+      class="big-star"
+      style="top: 20%; left: 30%"
+      onclick="openScene('scene1')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 35%; left: 60%"
+      onclick="openScene('scene2')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 50%; left: 20%"
+      onclick="openScene('scene3')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 65%; left: 70%"
+      onclick="openScene('scene4')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 75%; left: 40%"
+      onclick="openScene('scene5')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 45%; left: 80%"
+      onclick="openScene('scene6')"
+    ></div>
+    <div
+      class="big-star"
+      style="top: 25%; left: 75%"
+      onclick="openScene('scene7')"
+    ></div>
+
+    <!-- SOL CENTRAL -->
+    <div class="big-star special-star" onclick="openScene('scene8')"></div>
+
+    <!-- Escenas -->
+    <div id="scene1" class="scene">
+      <h2>El comienzo de nuestra historia ✨</h2>
+      <p id="text1"></p>
+    </div>
+
+    <div id="scene2" class="scene">
+      <h2>Nuestra primera cita 💫</h2>
+      <p id="text2"></p>
+    </div>
+
+    <div id="scene3" class="scene">
+      <h2>Cuando supe que eras tú 🌌</h2>
+      <p id="text3"></p>
+    </div>
+
+    <div id="scene4" class="scene">
+      <h2>Quédate 🌙</h2>
+      <p id="text4"></p>
+    </div>
+
+    <div id="scene5" class="scene">
+      <h2>Lo que siento por ti 💖</h2>
+      <p id="text5"></p>
+    </div>
+
+    <div id="scene6" class="scene">
+      <h2>Nuestros sueños 🌙</h2>
+      <p id="text6"></p>
+    </div>
+
+    <div id="scene7" class="scene">
+      <h2>Siempre tú 💍</h2>
+      <p id="text7"></p>
+    </div>
+
+    
+    <div id="scene8" class="scene">
+      <h2>Nuestro futuro juntos</h2>
+      <img src="nosotros.jpg" class="love-photo" />
+      <p id="text8"></p>
+    </div>
+  
+</div>
+
+
+    <!-- Luna -->
+    <div class="moon" onclick="closeScene()"></div>
+
+    <script>
+      /* Crear estrellas pequeñas */
+      const starsContainer = document.getElementById("stars");
+      for (let i = 0; i < 180; i++) {
+        let star = document.createElement("div");
+        star.classList.add("star");
+        star.style.width = Math.random() * 3 + "px";
+        star.style.height = star.style.width;
+        star.style.top = Math.random() * 100 + "%";
+        star.style.left = Math.random() * 100 + "%";
+        starsContainer.appendChild(star);
+      }
+
+      /* Textos */
+      const texts = {
+        text1:
+          "Esa vez que hablamos por primera vez en persona en la posada algo especial pasó, todo se sintio tan mágico, conectamos tan bien y ese fue el comienzo de esta historia.",
+        text2:
+          "Para ti fue una salida amistosa pero para mi fue el comienzo de algo más grande, el inicio de lo mejor que me habia pasado, esa cita que tuvimos me hizo darme cuenta de lo increible que eres, desde ese dia supe que te queria tener para siempre a mi lado, que queria compartir ese y mas momentos a tu lado.",
+        text3: "Desde que te conocí, todo se volvió más brillante, mis dias mas felices y mis noches increibles, no me imagino mi vida sin ti, en estos ultimos meses me has enseñado muchas cosas, como que lo intenso no siempre es malo, que sentir demasiado no es un impedimento para estar con alguien, me has enseñado el valor de muchas cosas y por eso y mas siempre voy a estar infinitamente agradecido contigo",
+        text4: "Como el nombre del titulo mi mas sincero deseo es que te quedes, que te quedes para formar una familia conmigo, que te quedes para seguir haciendonos felices para siempre, para cumplir todas nuestras metas y estar orgullosos el uno para el otro, que si estamos en los momentos buenos tambien te quedes en los no tan buenos, Kassandra, mi vida te pertenece, mi amor es todo tuyo, hiciste desde el primer dia que estos ojitos solo te miraran a ti y mi deseo es que para siempre te quedes tu a mi lado, compartiendo cada momento juntos como la familia que podemos ser algun dia.",
+        text5:
+          "Lo que siento por ti no cabe en palabras, pero cabe perfecto en mi vida.",
+        text6: "Quiero cumplir sueños contigo, uno por uno.",
+        text7:
+          "Si el universo nos cruzó, fue porque siempre estuvimos destinados.",
+        text8: "Este aun es el inicio de todo lo que tenemos juntos como nuestro primer San Valentin juntos amor. Gracias por haberme dejado entrar a tu vida y llenar la mia de tanta felicidad, Prometo hacerte la mujer mas feliz de todo el mundo y esforzarme dia a dia para conseguirlo. Este universo de nuestros recuerdos es solo el comienzo de nuestra historia, y que cada una de las estrellas sea un momento que recordemos algun dia de viejitos, Te amo de aqui hasta las estrellas",
+      };
+
+      function typeWriter(elementId, text) {
+        let i = 0;
+        const element = document.getElementById(elementId);
+        element.innerHTML = "";
+        const interval = setInterval(() => {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 20);
+      }
+
+      function openScene(sceneId) {
+        const scene = document.getElementById(sceneId);
+        document.body.style.transform = "scale(1.05)";
+        document.body.style.transition = "transform 0.6s ease";
+
+        setTimeout(() => {
+          document.body.style.transform = "scale(1)";
+          scene.style.display = "flex";
+          document.querySelector(".moon").style.display = "block";
+
+          const textId = "text" + sceneId.replace("scene", "");
+          typeWriter(textId, texts[textId]);
+        }, 400);
+      }
+function openScene(sceneId) {
+  const scene = document.getElementById(sceneId);
+
+  // 🔥 Oculta estrellas grandes
+  document.querySelectorAll(".big-star").forEach((star) => {
+    star.style.display = "none";
+  });
+
+  document.body.style.transform = "scale(1.05)";
+  document.body.style.transition = "transform 0.6s ease";
+
+  setTimeout(() => {
+    document.body.style.transform = "scale(1)";
+    scene.style.display = "flex";
+    document.querySelector(".moon").style.display = "block";
+
+    const textId = "text" + sceneId.replace("scene", "");
+    typeWriter(textId, texts[textId]);
+  }, 400);
+}
+
+      function closeScene() {
+  document.querySelectorAll(".scene").forEach((scene) => {
+    scene.style.display = "none";
+  });
+
+  // ⭐ Vuelve a mostrar estrellas grandes
+  document.querySelectorAll(".big-star").forEach((star) => {
+    star.style.display = "block";
+  });
+
+  document.querySelector(".moon").style.display = "none";
+}
+
+    </script>
+  </body>
+</html>
